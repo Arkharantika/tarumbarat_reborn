@@ -120,6 +120,20 @@ class HardwareController extends Controller
         return view('hardwaredetailcctv',compact('records','chance','recorddetail','awal','akhir','pilihannya','recordcctv','arrayimg'));
     }
 
+    public function HardwareCross($id)
+    {
+        $chance = strval($id);
+        $awal=null;
+        $akhir=null;
+        $pilihannya=null;
+        // $records = Hardware::join('trs_raw_d_gpa', 'trs_raw_d_gpa.kd_hardware', '=', 'mst_hardware.kd_hardware')->where('mst_hardware.kd_hardware',$id)->get();
+        $recorddetail = Hardware::where('kd_hardware',$id)->get()->last();
+        // return $records;
+        $recordcctv = Hardware::join('image_ftp','image_ftp.img_num','=','mst_hardware.cctv')->where('mst_hardware.kd_hardware', $id)->get()->last();
+        // return $kentang;
+        return view('hardwaredetailcross',compact('chance','recorddetail','awal','akhir','pilihannya','recordcctv'));
+    }
+
     public function SelectCCTVFromDateRange(Request $request,$id)
     {
         $chance = strval($id);

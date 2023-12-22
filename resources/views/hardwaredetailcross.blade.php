@@ -100,12 +100,12 @@
                         aria-controls="tab3" aria-selected="false">Grafik</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" id="tab1-tab" data-toggle="" href="#tab4" role="tab" aria-controls="tab4"
-                        aria-selected="true">CCTV</a>
+                    <a class="nav-link" id="" data-toggle="" href="{{url('/hardwarecctv/'.$chance)}}" role="tab"
+                        aria-controls="" aria-selected="false">CCTV</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="" data-toggle="" href="{{url('/hardwarecross/'.$chance)}}" role=""
-                        aria-controls="" aria-selected="false">Cross Section</a>
+                    <a class="nav-link active" id="tab1-tab" data-toggle="" href="#tab4" role="" aria-controls="tab4"
+                        aria-selected="true">Cross Section</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -113,68 +113,22 @@
                     <div class="container mt-3">
                         <div>
                             <!-- SEARCH FORM -->
-                            <div class="">
-                                <form action="{{url('/hardwarecctvrange/'.$chance)}}" method="post">
-                                    @method('POST')
-                                    @csrf
-                                    <!-- <input type="text"> -->
-                                    <div class="row">
-
-                                        <div class="btn-group col-6 col-sm-3 mb-1" role="group" style="height:40px">
-                                            <button type="button" class="btn btn-secondary btn-sm sm-3" disabled>
-                                                Mulai</button>
-                                            <input type="date" class="form-control sm-3" id="fixedWidthInput"
-                                                value="{{$awal}}" name="startdate" style="width: auto;" required>
-                                        </div>
-
-                                        <div class="btn-group col-6 col-sm-3 mb-1" role="group" style="height:40px">
-                                            <button type="button" class="btn btn-secondary btn-sm sm-3"
-                                                disabled>Berhenti</button>
-                                            <input type="date" class="form-control sm-3" id="fixedWidthInput"
-                                                value="{{$akhir}}" name="enddate" style="width: auto;" required>
-                                        </div>
-
-                                        <div class="btn-group col-6 col-sm-3 mb-1" role="group" style="height:40px">
-                                            <button type="submit" class="btn btn-primary btn-sm"><i
-                                                    class='bx bx-search'></i> Cari</button>
-                                        </div>
-
-                                    </div>
-                                </form>
-                            </div>
                             <!-- BATAS AKHIR SEARCH FORM -->
 
                             <div class="card">
                                 <div class="card-header"></div>
                                 <div class="card-body d-flex justify-content-center text-center">
                                     <div class="container">
-                                        @if($recorddetail->cctv == null)
-                                        <h3>
-                                            Tidak ada CCTV pada pos ini
-                                        </h3>
-                                        <br>
-                                        <!-- c:\Users\M S I\Downloads\no-internet.png -->
-                                        <img src="{{ asset('images/no-internet.png') }}" alt=""
+                                        <div class="table-responsive">
+                                            @if($recorddetail->foto_cross == null)
+                                            tidak ada foto cross section
+                                            @else
+                                            <img src="{{ asset('images/'.$recorddetail->foto_cross) }}" alt=""
                                             class="rounded border border-dark" style="width:400px;">
-                                        @else
-
-                                        @foreach($arrayimg as $kentang => $hi)
-                                        <img onclick="tutungopen(this.src)"
-                                            style="max-width: 20%;height: auto;cursor:pointer;"
-                                            class="tutung img-fluid rounded border border-dark mt-1"
-                                            src="{{ url('../../ftp_logger/totalcamera/'.$arrayimg[$kentang]->img_name) }}"
-                                            alt="">
-                                        @endforeach
-                                        @endif
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div style="display:none;" class="card-bar" id="uhuy">
-                                <span class="close-button" onclick="tutungclose()"> X </span>
-                                
-                                <img id="imgbox" src=""
-                                    alt="">
-                                    
                             </div>
 
                         </div>

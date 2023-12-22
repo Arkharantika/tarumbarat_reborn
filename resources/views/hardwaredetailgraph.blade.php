@@ -103,6 +103,10 @@
                     <a class="nav-link" id="" data-toggle="" href="{{url('/hardwarecctv/'.$chance)}}" role=""
                         aria-controls="" aria-selected="false">CCTV</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="" data-toggle="" href="{{url('/hardwarecross/'.$chance)}}" role=""
+                        aria-controls="" aria-selected="false">Cross Section</a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">

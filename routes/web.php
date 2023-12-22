@@ -40,6 +40,7 @@ Route::get('/hardware/{id}', [HardwareController::class, 'HardwareDetailData'])-
 Route::get('/hardwaretable/{id}', [HardwareController::class, 'HardwareDetailTable'])->name('HardwareDetailTable');
 Route::get('/hardwaregraph/{id}', [HardwareController::class, 'HardwareDetailGraph'])->name('HardwareDetailGraph');
 Route::get('/hardwarecctv/{id}', [HardwareController::class, 'HardwareDetailCCTV'])->name('HardwareDetailCCTV');
+Route::get('/hardwarecross/{id}', [HardwareController::class, 'HardwareCross'])->name('HardwareCross');
 
 Route::post('/hardwaredaterange/{id}', [HardwareController::class, 'SelectDataFromDateRange'])->name('SelectDataFromDateRange');
 Route::post('/hardwaregraphrange/{id}', [HardwareController::class, 'SelectGraphFromDateRange'])->name('SelectGraphFromDateRange');
