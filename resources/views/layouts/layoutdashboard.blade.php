@@ -453,7 +453,7 @@
                                     <input type="checkbox" id="goyangCheckbox" checked> Goyang
                                 </label> -->
                         </div>
-                        <label>
+                        <!-- <label>
                             <input type="checkbox" id="tombolCurahHujan" onclick="tampilCurahHujan()"> POS Curah
                                 Hujan
                         </label>
@@ -480,12 +480,12 @@
                                 <input type="checkbox" id=""> POS Manual
                             </label>
                             <br>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="card-header text-center">
+                    <!-- <div class="card-header text-center">
                         <h5>PJT II</h5>
-                    </div>
-                    <div class="card-body">
+                    </div> -->
+                    <!-- <div class="card-body">
                         <label>
                             <input type="checkbox" id="" onclick=""> POS TMA
                         </label>
@@ -528,7 +528,7 @@
                             </label>
                             <br>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!--  -->

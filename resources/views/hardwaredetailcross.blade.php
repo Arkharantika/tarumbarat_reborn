@@ -123,12 +123,20 @@
                                             @if($recorddetail->foto_cross == null)
                                             tidak ada foto cross section
                                             @else
-                                            <img src="{{ asset('images/'.$recorddetail->foto_cross) }}" alt=""
-                                            class="rounded border border-dark" style="width:400px;">
+                                            <img onclick="tutungopen(this.src)" src="{{ asset('images/'.$recorddetail->foto_cross) }}" alt=""
+                                            class="rounded border border-dark" style="width:400px;cursor:pointer;">
                                             @endif
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div style="display:none;width:1800px;top:55%;" class="card-bar" id="uhuy">
+                                <!-- <span class="close-button" onclick="tutungclose()"> X </span> -->
+                                
+                                <img id="imgbox" src=""
+                                    alt="">
+                                <button onclick="tutungclose()" class="btn btn-sm btn-secondary">tutup X</button>
+                                    
                             </div>
 
                         </div>
