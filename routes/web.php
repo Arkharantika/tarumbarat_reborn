@@ -33,7 +33,7 @@ require __DIR__.'/auth.php';
 Route::get('/map', [WelcomeController::class, 'index'])->name('index');
 
 // >>> WELCOME DASHBOARD
-Route::get('/oldlanding', [WelcomeController::class, 'LandingPage'])->name('LandingPage');
+// Route::get('/oldlanding', [WelcomeController::class, 'LandingPage'])->name('LandingPage');
 
 // >>> FOR HARDWARE DETAIL
 Route::get('/hardware/{id}', [HardwareController::class, 'HardwareDetailData'])->name('HardwareDetailData');
@@ -68,6 +68,12 @@ Route::post('/importdata', [ImportExportController::class, 'import'])->name('imp
 // >>> FOR EXPORT EXCEl DATA
 Route::post('/exportdata/{id}', [ImportExportController::class, 'export'])->name('export');
 
+Route::get('/sayang', [ImportExportController::class, 'exportEntirePage'])->name('exports');
+
 Route::get('/cctv', function () {
     return view('cctv');
 });
+
+// >>> FOR MAX AND MIN
+Route::get('/nilaimax', [WelcomeController::class, 'nilaiMax'])->name('nilaiMax');
+Route::get('/nilaimin', [WelcomeController::class, 'nilaiMin'])->name('nilaiMin');

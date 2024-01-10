@@ -12,110 +12,6 @@
     </div>
     @endif
 
-    <!-- Peta Google MAP -->
-    <!-- <hr /> -->
-    
-    <!-- <div class="card mt-3">
-        <div class="card-body bg-light">
-        </div>
-    </div> -->
-
-    <!-- Informasi Tinggi Muka Air -->
-
-    <!-- Informasi Sistem -->
-    <!-- <div>
-        <i class='bx bx-chevron-right'></i>Informasi Platform Sistem
-    </div>
-    <hr>
-    <div class="card shadow">
-        <div class="card-body" style="text-align: justify;font-size:15px;">
-            <b> <img src="{{asset('images/water.png')}}" alt=""> &nbsp Sistem Informasi Saluran Irigasi Tarum Barat</b><br><br>
-            Pemenuhan Kualitas dan kuantitas pasokan air baku menjadi kendala yang dihadapi dalam pengelolaan Saluran Irigasi Tarum Barat, Dengan adanya perkembangan teknologi saat ini dibidang sistem informasi Internet of think (IoT) diharapkan dapat memberikan solusi dari permasalahan tersebut
-            Sistem Informasi Saluran Irigasi Tarum Barat merupakan sistem informasi pengamatan muka air pada 22 titik yang dukungan perangkat IoT untuk mengukur kedalaman air yang akurat dan handal dengan sensor ultrasonic dan dilengkapi data pengukuran debit untuk mendapatkan rating curve pada setiap titik. Dashboard yang responsive dan desain yang baik dan modern menampilkan visualisasi data serta sinkronisasi ke website di PUPR maupun PJT II
-        </div>
-    </div> -->
-
-    <!-- Fitur Platform -->
-    <!-- <div>
-        <i class='bx bx-chevron-right'></i>Fitur Platform
-    </div>
-    <hr>
-    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4"
-        style="">
-        <a href="dataposhidrologi" class="col">
-            <div class="card radius-10 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <img src="{{asset('images/picture1.png')}}" alt="" style="border-radius:2.5%;;width:225px;height:75px;">
-                            <br><br>
-                            <div class="text-dark" style="text-align: justify;font-size:18px;">
-                                <b>Data Pos Hidrologi</b>
-                            </div>
-                            <div class="text-dark" style="text-align: justify;font-size:13px;">
-                                Menampilkan data dalam bentuk tabel maupun grafik untuk Pos Water Level, Pos Curah Hujan, dan Data Debit yang disaluran Irigasi Tarum
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="neracaair" class="col">
-            <div class="card radius-10 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <img src="{{asset('images/picture2.png')}}" alt="" style="border-radius:2.5%;;width:225px;height:75px;">
-                            <br><br>
-                            <div class="text-dark" style="text-align: justify;font-size:18px;">
-                                <b>Neraca Air</b>
-                            </div>
-                            <div class="text-dark" style="text-align: justify;font-size:13px;">
-                                Menampilkan Pemodelan untuk mendapatkan neraca air dari Hulu sampai hilir Saluran Irigasi Tarum Barat
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="col">
-            <div class="card radius-10 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <img src="{{asset('images/picture3.png')}}" alt="" style="border-radius:2.5%;;width:225px;height:75px;">
-                            <br><br>
-                            <div class="text-dark" style="text-align: justify;font-size:18px;">
-                                <b>Data Kendali Mutu</b>
-                            </div>
-                            <div class="text-dark" style="text-align: justify;font-size:13px;">
-                                Menampilkan data penilaian kondisi alat, Kondisi Pos dan Lingkungan Pos yang kemudian
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <a href="cctv" class="col">
-            <div class="card radius-10 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <img src="{{asset('images/picture4.png')}}" alt="" style="border-radius:2.5%;;width:225px;height:75px;">
-                            <br><br>
-                            <div class="text-dark" style="text-align: justify;font-size:18px;">
-                                <b>CCTV</b>
-                            </div>
-                            <div class="text-dark" style="text-align: justify;font-size:13px;">
-                            Menampilkan tampilan video Streaming CCTV dan capture CCTV
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div> -->
-
 </div>
 
 @section('CustomScripts')
@@ -127,6 +23,97 @@
     //     iconUrl: "{{asset('images/redpin.png')}}",
     //     iconSize: [40, 40], 
     // });
+
+    // >>> TEST NEW VARIABLES
+    $.ajax({
+        url: 'http://sisirumba.pusair-pu.go.id/test_sisirumba_2/public/nilaimax',
+        method: 'GET',
+        dataType: 'json',
+        beforeSend: function () {
+            console.log('Fetching data...');
+            alert("loading . . .")
+        },
+        success: function(data) {
+            localStorage.setItem('fetchedData', JSON.stringify(data));
+            document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('There was a problem with the fetch operation:', errorThrown);
+        },
+        complete: function () {
+            console.log('Fetch completed.');
+        }
+    });
+
+    $.ajax({
+        url: 'http://sisirumba.pusair-pu.go.id/test_sisirumba_2/public/nilaimin',
+        method: 'GET',
+        dataType: 'json',
+        beforeSend: function () {
+            console.log('Fetching data...');
+            alert("loading . . .")
+        },
+        success: function(data) {
+            localStorage.setItem('minData', JSON.stringify(data));
+            document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('There was a problem with the fetch operation:', errorThrown);
+        },
+        complete: function () {
+            console.log('Fetch completed.');
+        }
+    });
+
+    var suply = [];
+    var suplyMin = [];
+
+    // Call this function to use the data stored in localStorage
+    function useStoredData() {
+        const storedData = localStorage.getItem('fetchedData');
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            for (const key in parsedData) {
+                if (parsedData.hasOwnProperty(key)) {
+                    let value = parsedData[key];
+                    if(value==null){
+                        value = 0;
+                    }
+                    suply.push(value);
+                }
+            }
+            console.log('Data max from localStorage:', parsedData);
+        } else {
+            console.log('No data found in localStorage');
+        }
+    }
+
+    function minData() {
+        const storedData = localStorage.getItem('minData');
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            for (const key in parsedData) {
+                if (parsedData.hasOwnProperty(key)) {
+                    let value = parsedData[key];
+                    if(value==null){
+                        value = 0;
+                    }
+                    suplyMin.push(value);
+                }
+            }
+            console.log('Data min from localStorage:', parsedData);
+        } else {
+            console.log('No data found in localStorage');
+        }
+    }
+    // Example: Call the function to use the stored data
+    useStoredData();
+    minData();
+    console.log("suply");
+    console.log(suply);
+    console.log("suplyMin");
+    console.log(suplyMin);
+
 
     var redIcon = L.divIcon({className: 'leaflet-div-ser',iconSize:[20,20]});
     var iconmerah = L.icon({iconUrl: '{{asset('images/iconmerah.png')}}',iconSize: [10, 10] })
@@ -263,37 +250,10 @@
     console.log("kampret >>>")
     console.log(data_example2)
     //console.log(data_example[0]["name"]);
-
-    // <==== BAGIAN DEMO ===>
-    // var examplename = data_example[3]["name"];
-    // var exampledate = data_example[3]["daterecord"];
-    // var examplevalue = data_example[3]["intivalue"];
-    // document.getElementById("demoname").innerHTML = examplename;
-    // document.getElementById("demodate").innerHTML = exampledate;
-    // document.getElementById("demovalue").innerHTML = examplevalue;
-    // var examplename2 = data_example[4]["name"];
-    // var exampledate2 = data_example[4]["daterecord"];
-    // var examplevalue2 = data_example[4]["intivalue"];
-    // document.getElementById("demoname2").innerHTML = examplename2;
-    // document.getElementById("demodate2").innerHTML = exampledate2;
-    // document.getElementById("demovalue2").innerHTML = examplevalue2;
-    // var examplename3 = data_example[5]["name"];
-    // var exampledate3 = data_example[5]["daterecord"];
-    // var examplevalue3 = data_example[5]["intivalue"];
-    // document.getElementById("demoname3").innerHTML = examplename3;
-    // document.getElementById("demodate3").innerHTML = exampledate3;
-    // document.getElementById("demovalue3").innerHTML = examplevalue3;
-    // var examplename4 = data_example[6]["name"];
-    // var exampledate4 = data_example[6]["daterecord"];
-    // var examplevalue4 = data_example[6]["intivalue"];
-    // document.getElementById("demoname4").innerHTML = examplename4;
-    // document.getElementById("demodate4").innerHTML = exampledate4;
-    // document.getElementById("demovalue4").innerHTML = examplevalue4;
-    //  <==== END OF DEMO ===>
     
     const contoh = L.layerGroup();
     for (var i = 0; i < data_example.length; i++) {
-        var marker = L.marker([data_example[i]["lat"], data_example[i]["lng"]],{icon:redIcon}).bindPopup("<hr style='margin-bottom:5px;margin-top:5px;color:black;'><div class='text-primary' style='margin-bottom:5px;font-style:italic;font-size:12px;'>Nama Pos :<b>"+data_example[i]["name"]+"</b></div><div class='text-primary' style='margin-bottom:5px;font-style:italic;font-size:12px;'>Koordinat : LS "+data_example[i].lat+", BT "+data_example[i].lng+"</div><table class='table table-bordered' style='margin-bottom:5px;'><thead class='colorthead thead-dark'><tr><th scope=col' style='vertical-align: text-bottom;'>Parameter</th><th class='w-auto' style='vertical-align: text-top;'>Nilai</th><th scope='col' style='vertical-align: text-top;'>Data Max Sesaat</th><th scope='col' style='vertical-align: text-top;'>Data Min Sesaat</th></tr></thead><tbody><tr><td>TMA</td><td>"+(data_example[i].intivalue - parseFloat(data_example[i].k_tma)).toFixed(2)+" m</td><td class='text-white' style='background:#a31919' >"+(data_example[i].vmax-parseFloat(data_example[i].k_tma)).toFixed(2)+" m</td><td class='text-white' style='background:#ff8c40;'>"+(data_example[i].vmin-parseFloat(data_example[i].k_tma)).toFixed(2)+" m</td></tr><tr><td>Debit</td><td>"+(data_example[i].k1*Math.pow(parseFloat(data_example[i].intivalue-parseFloat(data_example[i].k_tma)) + parseFloat(data_example[i].k2),data_example[i].k3)).toFixed(2)+"&nbspm<sup>3</sup>/s</td><td class='text-white' style='background:#a31919' >"+(data_example[i].k1*Math.pow((data_example[i].vmax-parseFloat(data_example[i].k_tma))+data_example[i].k2,data_example[i].k3)).toFixed(2)+"&nbspm<sup>3</sup>/s</td><td class='text-white' style='background:#ff8c40;'>"+(data_example[i].k1*Math.pow((data_example[i].vmin-parseFloat(data_example[i].k_tma))+data_example[i].k2,data_example[i].k3)).toFixed(2)+"&nbspm<sup>3</sup>/s</td></tr></tbody></table><div class='mt-1'><div class='text-danger' style='margin-bottom:15px;font-style:italic;font-size:12px;'>Data Terakhir : "+data_example[i].daterecord+" &nbsp <i class='bx bxs-calendar'></i></div><a class='btn btn-sm btn-secondary text-light' href='{{ url('/hardwaretable/') }}/"+data_example[i].kentang+"'>> check detail </div>",{'className' : 'custom-popup',closeButton: false}).on('mouseover', function () {
+        var marker = L.marker([data_example[i]["lat"], data_example[i]["lng"]],{icon:redIcon}).bindPopup("<hr style='margin-bottom:5px;margin-top:5px;color:black;'><div class='text-primary' style='margin-bottom:5px;font-style:italic;font-size:12px;'>Nama Pos :<b>"+data_example[i]["name"]+"</b></div><div class='text-primary' style='margin-bottom:5px;font-style:italic;font-size:12px;'>Koordinat : LS "+data_example[i].lat+", BT "+data_example[i].lng+"</div><table class='table table-bordered' style='margin-bottom:5px;'><thead class='colorthead thead-dark'><tr><th scope=col' style='vertical-align: text-bottom;'>Parameter</th><th class='w-auto' style='vertical-align: text-top;'>Nilai</th><th scope='col' style='vertical-align: text-top;'>Data Max Sesaat</th><th scope='col' style='vertical-align: text-top;'>Data Min Sesaat</th></tr></thead><tbody><tr><td>TMA</td><td>"+(data_example[i].intivalue - parseFloat(data_example[i].k_tma)).toFixed(2)+" m</td><td class='text-white' style='background:#a31919' >"+(suply[i]-parseFloat(data_example[i].k_tma)).toFixed(2)+" m</td><td class='text-white' style='background:#ff8c40;'>"+(suplyMin[i]-parseFloat(data_example[i].k_tma)).toFixed(2)+" m</td></tr><tr><td>Debit</td><td>"+(data_example[i].k1*Math.pow(parseFloat(data_example[i].intivalue-parseFloat(data_example[i].k_tma)) + parseFloat(data_example[i].k2),data_example[i].k3)).toFixed(2)+"&nbspm<sup>3</sup>/s</td><td class='text-white' style='background:#a31919' >"+(data_example[i].k1*Math.pow((suply[i]-parseFloat(data_example[i].k_tma))+data_example[i].k2,data_example[i].k3)).toFixed(2)+"&nbspm<sup>3</sup>/s</td><td class='text-white' style='background:#ff8c40;'>"+(data_example[i].k1*Math.pow((suplyMin[i]-parseFloat(data_example[i].k_tma))+data_example[i].k2,data_example[i].k3)).toFixed(2)+"&nbspm<sup>3</sup>/s</td></tr></tbody></table><div class='mt-1'><div class='text-danger' style='margin-bottom:15px;font-style:italic;font-size:12px;'>Data Terakhir : "+data_example[i].daterecord+" &nbsp <i class='bx bxs-calendar'></i></div><a class='btn btn-sm btn-secondary text-light' href='{{ url('/hardwaretable/') }}/"+data_example[i].kentang+"'>> check detail </div>",{'className' : 'custom-popup',closeButton: false}).on('mouseover', function () {
                 this.openPopup();
             }).openPopup();
         marker.addTo(contoh);
