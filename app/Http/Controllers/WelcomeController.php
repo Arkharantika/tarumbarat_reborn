@@ -45,6 +45,7 @@ class WelcomeController extends Controller
                         ->select(
                             // DB::raw('(trs_raw_d_gpa.tlocal) as hari'),
                             DB::raw('(trs_raw_d_gpa.value)'),
+                            DB::raw('(trs_raw_d_gpa.tlocal)'),
                             DB::raw('(mst_hardware.kd_hardware)'),
                             DB::raw('(mst_hardware.latitude)'),
                             DB::raw('(mst_hardware.longitude)'),

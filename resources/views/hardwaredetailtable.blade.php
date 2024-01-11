@@ -244,8 +244,13 @@
                                 {{$recorddetail->k2}}),(<b>c<sub>3</sub></b> : {{$recorddetail->k3}})</button>
                         </div> -->
                         <div class="text-center mt-2 mb-2 ">
-                            <button class="btn-outline-dark border" disabled><b>Q</b><sub>Debit</sub> =
+                            <!-- <button class="btn-outline-dark border" disabled><b>Q</b><sub>Debit</sub> =
                                 <b>a<sub>1</sub></b>*(TMA+<b>b<sub>2</sub></b>)<sup><b>c<sub>3</sub></b></sup>
+                                &nbsp || &nbsp (<b>K</b> TMA : {{$recorddetail->k_tma}})&nbsp || &nbsp(<b>a<sub>1</sub></b> :
+                                {{$recorddetail->k1}}), (<b>b<sub>2</sub></b> :
+                                {{$recorddetail->k2}}),(<b>c<sub>3</sub></b> : {{$recorddetail->k3}})</button> -->
+                            <button class="btn-outline-dark border" disabled><b>Q</b><sub>Debit</sub> =
+                                (<b>-b</b>+(<b>b<sup>2</sup></b>-4<b>a</b>*(<b>c</b>-TMA))<sup>1/2</sup>)/2*<b>a</b>
                                 &nbsp || &nbsp (<b>K</b> TMA : {{$recorddetail->k_tma}})&nbsp || &nbsp(<b>a<sub>1</sub></b> :
                                 {{$recorddetail->k1}}), (<b>b<sub>2</sub></b> :
                                 {{$recorddetail->k2}}),(<b>c<sub>3</sub></b> : {{$recorddetail->k3}})</button>
@@ -274,7 +279,11 @@
                                         @else
                                         <td>{{number_format(($row->nilai)-($recorddetail->k_tma),2)}}</td>
                                         @endif
-                                        <?php $Q=($recorddetail->k1)*pow(($row->nilai)+($recorddetail->k2),($recorddetail->k3)); ?>
+                                        <?php 
+                                        $a = $recorddetail->k1;
+                                        $b = $recorddetail->k2;
+                                        $c = $recorddetail->k3;
+                                        $Q = (-1 * $b + sqrt(pow($b, 2) - 4 * $a * ($c - $row->nilai))) / (2 * $a); ?>
                                         <td>{{number_format(($Q),2)}}</td>
                                         <td></td>
                                     </tr>
