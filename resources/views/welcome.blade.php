@@ -25,45 +25,54 @@
     // });
 
     // >>> TEST NEW VARIABLES
-    $.ajax({
-        url: 'http://sisirumba.pusair-pu.go.id/test_sisirumba_2/public/nilaimax',
-        method: 'GET',
-        dataType: 'json',
-        beforeSend: function () {
-            console.log('Fetching data...');
-            alert("loading . . .")
-        },
-        success: function(data) {
-            localStorage.setItem('fetchedData', JSON.stringify(data));
-            document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('There was a problem with the fetch operation:', errorThrown);
-        },
-        complete: function () {
-            console.log('Fetch completed.');
-        }
-    });
+    function updateMax(){
+        $.ajax({
+            url: 'http://sisirumba.pusair-pu.go.id/test_sisirumba_2/public/nilaimax',
+            method: 'GET',
+            dataType: 'json',
+            beforeSend: function () {
+                console.log('Fetching data...');
+                // alert("loading . . .")
+            },
+            success: function(data) {
+                localStorage.setItem('fetchedData', JSON.stringify(data));
+                document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('There was a problem with the fetch operation:', errorThrown);
+            },
+            complete: function () {
+                console.log('Fetch completed.');
+            }
+        });
+    }
 
-    $.ajax({
-        url: 'http://sisirumba.pusair-pu.go.id/test_sisirumba_2/public/nilaimin',
-        method: 'GET',
-        dataType: 'json',
-        beforeSend: function () {
-            console.log('Fetching data...');
-            alert("loading . . .")
-        },
-        success: function(data) {
-            localStorage.setItem('minData', JSON.stringify(data));
-            document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('There was a problem with the fetch operation:', errorThrown);
-        },
-        complete: function () {
-            console.log('Fetch completed.');
-        }
-    });
+    function updateMin(){
+        $.ajax({
+            url: 'http://sisirumba.pusair-pu.go.id/test_sisirumba_2/public/nilaimin',
+            method: 'GET',
+            dataType: 'json',
+            beforeSend: function () {
+                console.log('Fetching data...');
+                // alert("loading . . .")
+            },
+            success: function(data) {
+                localStorage.setItem('minData', JSON.stringify(data));
+                document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('There was a problem with the fetch operation:', errorThrown);
+            },
+            complete: function () {
+                console.log('Fetch completed.');
+            }
+        });
+    }
+
+    updateMax();
+    updateMin();
+    setInterval(updateMax, 4000);
+    setInterval(updateMin, 4000);
 
     var suply = [];
     var suplyMin = [];
@@ -109,6 +118,8 @@
     // Example: Call the function to use the stored data
     useStoredData();
     minData();
+    setInterval(useStoredData, 4000);
+    setInterval(minData, 4000);
     console.log("suply");
     console.log(suply);
     console.log("suplyMin");
@@ -411,7 +422,7 @@
             // var kentangVisible = document.getElementById('kentangCheckbox').checked;
             // var goyangVisible = document.getElementById('goyangCheckbox').checked;
             var tatonasVisible = document.getElementById('tatonasCheckbox').checked;
-            var manualVisible = document.getElementById('manualCheckbox').checked;
+            // var manualVisible = document.getElementById('manualCheckbox').checked;
 
             // kentangMarkers.forEach(marker => {
             //     if (kentangVisible) {
@@ -440,11 +451,11 @@
             // } else {
             //     map.removeLayer(cities);
             // }
-            if (manualVisible) {
-                map.addLayer(contoh2);
-            } else {
-                map.removeLayer(contoh2);
-            }
+            // if (manualVisible) {
+            //     map.addLayer(contoh2);
+            // } else {
+            //     map.removeLayer(contoh2);
+            // }
 
         }
 
@@ -452,7 +463,7 @@
         // document.getElementById('kentangCheckbox').addEventListener('change', toggleMarkers);
         // document.getElementById('goyangCheckbox').addEventListener('change', toggleMarkers);
         document.getElementById('tatonasCheckbox').addEventListener('change', toggleMarkers);
-        document.getElementById('manualCheckbox').addEventListener('change', toggleMarkers);
+        // document.getElementById('manualCheckbox').addEventListener('change', toggleMarkers);
 
         // Initial marker visibility
         toggleMarkers();
