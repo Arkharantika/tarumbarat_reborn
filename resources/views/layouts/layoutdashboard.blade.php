@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="30">
+    <!-- <meta http-equiv="refresh" content="30"> -->
     <!--favicon-->
     <link rel="icon" href="{{asset('images/pupr.png')}}" type="image/png" />
     <!--plugins-->
@@ -345,7 +345,8 @@
 
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary shadow-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" style="position: absolute;top: 30px;right: 42.5%;z-index: 1000;">
+                <button type="button" class="btn btn-primary shadow-lg" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" style="position: absolute;top: 30px;right: 42.5%;z-index: 1000;">
                     Rekapitulasi Data Pos Hari Ini
                 </button>
 
@@ -361,7 +362,8 @@
                             </div>
                             <div class="modal-body">
                                 <div class="table-responsive">
-                                    <table id="example2" class="table table-striped table-bordered text-center" style="font-size:9px;">
+                                    <table id="example2" class="table table-striped table-bordered text-center lontong"
+                                        style="font-size:9px;">
                                         <thead>
                                             <tr>
                                                 <th colspan="2"></th>
@@ -384,18 +386,25 @@
                                         <tbody>
                                             <?php $no=1; ?>
                                             @foreach($ars as $ken => $wow)
-                                            <?php $Q=($wow->k1)*pow(($wow->value-($wow->k_tma))+($wow->k2),($wow->k3)); ?>
-                                            <?php $Qmax=($wow->k1)*pow(($ars_max[$ken]-($wow->k_tma))+($wow->k2),($wow->k3)); ?>
-                                            <?php $Qmin=($wow->k1)*pow(($ars_min[$ken]-($wow->k_tma))+($wow->k2),($wow->k3)); ?>
-                                            <tr>
+                                            <?php 
+                                                $a = $wow->k1;
+                                                $b = $wow->k2;
+                                                $c = $wow->k3;
+                                                $valuenya = floatval($wow->value);
+                                                $Q = (-1 * $b + sqrt(pow($b, 2) - 4 * $a * ($c - $valuenya))) / (2 * $a); 
+                                                // $Qalt = (-1 * $b + pow(pow($b,2)-(4*$a*($c - $valuenya)),1/2));
+                                                ?>
+                                                <tr>
                                                 <td>{{$wow->urutan}}</td>
                                                 <td>{{$wow->pos_name}}</td>
                                                 <td>{{number_format(($wow->value)-($wow->k_tma),2)}}</td>
-                                                <td>{{number_format($ars_max[$ken]-($wow->k_tma),2)}}</td>
-                                                <td>{{number_format($ars_min[$ken]-($wow->k_tma),2)}}</td>
+                                                <td></td>
+                                                <td></td>
                                                 <td>{{number_format(($Q),2)}}</td>
-                                                <td>{{number_format(($Qmax),2)}}</td>
-                                                <td>{{number_format(($Qmin),2)}}</td>
+                                                <!-- <td>{{number_format($valuenya-$a-$b-$c,2)}}</td> -->
+                                                <!-- <td>{{is_numeric($valuenya)}}</td> -->
+                                                <td>{{is_numeric($b)}}</td>
+                                                <td>{{is_numeric($c)}}</td>
                                                 <td>{{$wow->tlocal}}</td>
                                             </tr>
                                             @endforeach
@@ -441,9 +450,9 @@
                                 <input type="checkbox" id="tatonasCheckbox"> POS Telemetry
                             </label>
                             <br>
-                            <label>
+                            <!-- <label>
                                 <input type="checkbox" id="manualCheckbox"> POS Manual
-                            </label>
+                            </label> -->
                             <br>
                             <!-- <label>
                                     <input type="checkbox" id="kentangCheckbox" checked> Kentang
@@ -729,6 +738,149 @@
             cardnya.style.display = "block";
             tombolopen.style.display = "none";
         }
+
+        // >>> TEST NEW VARIABLES
+        function updateMax() {
+            $.ajax({
+                url: 'http://sisirumba.pusair-pu.go.id/test_sisirumba_2/public/nilaimax',
+                method: 'GET',
+                dataType: 'json',
+                beforeSend: function () {
+                    console.log('Fetching data...');
+                    // alert("loading . . .")
+                },
+                success: function (data) {
+                    localStorage.setItem('fetchedData', JSON.stringify(data));
+                    document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('There was a problem with the fetch operation:', errorThrown);
+                },
+                complete: function () {
+                    console.log('Fetch completed.');
+                }
+            });
+        }
+
+        function updateMin() {
+            $.ajax({
+                url: 'http://sisirumba.pusair-pu.go.id/test_sisirumba_2/public/nilaimin',
+                method: 'GET',
+                dataType: 'json',
+                beforeSend: function () {
+                    console.log('Fetching data...');
+                    // alert("loading . . .")
+                },
+                success: function (data) {
+                    localStorage.setItem('minData', JSON.stringify(data));
+                    document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('There was a problem with the fetch operation:', errorThrown);
+                },
+                complete: function () {
+                    console.log('Fetch completed.');
+                }
+            });
+        }
+
+        updateMax();
+        updateMin();
+        setInterval(updateMax, 30*1000);
+        setInterval(updateMin, 30*1000);
+
+        var jsonMax = [];
+        var jsonMin = [];
+
+        // Call this function to use the data stored in localStorage
+        function useStoredData() {
+            const storedData = localStorage.getItem('fetchedData');
+            jsonMax = [];
+            if (storedData) {
+                const parsedData = JSON.parse(storedData);
+                for (const key in parsedData) {
+                    if (parsedData.hasOwnProperty(key)) {
+                        let value = parsedData[key];
+                        if (value == null) {
+                            value = 0;
+                        }
+                        jsonMax.push(value);
+                    }
+                }
+                // console.log('Data max from localStorage:', parsedData);
+                console.log('JsonMax now :', jsonMax);
+            } else {
+                console.log('No data found in localStorage');
+            }
+        }
+
+        function minData() {
+            const storedData = localStorage.getItem('minData');
+            jsonMin = [];
+            if (storedData) {
+                const parsedData = JSON.parse(storedData);
+                for (const key in parsedData) {
+                    if (parsedData.hasOwnProperty(key)) {
+                        let value = parsedData[key];
+                        if (value == null) {
+                            value = 0;
+                        }
+                        jsonMin.push(value);
+                    }
+                }
+                // console.log('Data min from localStorage:', parsedData);
+                console.log('JsonMin now :', jsonMin);
+            } else {
+                console.log('No data found in localStorage');
+            }
+        }
+        // Example: Call the function to use the stored data
+        useStoredData();
+        minData();
+        setInterval(useStoredData, 30*1000);
+        setInterval(minData, 30*1000);
+        // console.log("jsonMax ");
+        // console.log(jsonMax[1]);
+        // console.log("jsonMin");
+        // console.log(jsonMin);
+        
+
+        var ktma = [];
+
+        @foreach($ars as $kentang => $record)
+            // var ref_id = "{{ $kentang }}";
+            var k1 = {{$record->k1}};
+            var k2 = {{$record->k2}};
+            var k3 = {{$record->k3}};
+            var k_tma = {{$record->k_tma}};
+            // console.log("bojoku=>"+bojonegoro);
+            var newData = { k_tma:parseFloat(k_tma), k1:parseFloat(k1), k2:parseFloat(k2), k3:parseFloat(k3) }
+            // var newData = { lat: lats, lng: longs, name: '{{$record->pos_name}}',vmax:valuemax,vmin:valuemin,daterecord:'{{$record->tlocal}}', intivalue:valuenya, kentang:jujukan_id }
+            console.log(k_tma)
+            ktma.push(newData);
+        @endforeach
+        console.log(ktma)
+
+        function changeMaxMin() {
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            // var table = document.getElementById('example2');
+            const tables = document.querySelectorAll('.lontong');
+            const table = tables[0]; // Assuming there is only one table with the specified class
+
+            const tableBody = table.querySelector('tbody');
+            for (let i = 0; i < jsonMax.length; i++) {
+                // console.log("opa")
+                tableBody.rows[i].cells[3].innerHTML = (jsonMax[i]-ktma[i].k_tma).toFixed(2);
+                tableBody.rows[i].cells[6].innerHTML = ((-1 * ktma[i].k2 + Math.sqrt(Math.pow(ktma[i].k2, 2) - 4 * ktma[i].k1 * (ktma[i].k3 - jsonMax[i]))) / (2 * ktma[i].k1)).toFixed(2);
+            }
+            for (let i = 0; i < jsonMin.length; i++) {
+                // console.log("opa")
+                tableBody.rows[i].cells[7].innerHTML = ((-1 * ktma[i].k2 + Math.sqrt(Math.pow(ktma[i].k2, 2) - 4 * ktma[i].k1 * (ktma[i].k3 - jsonMin[i]))) / (2 * ktma[i].k1)).toFixed(2);
+                tableBody.rows[i].cells[4].innerHTML = (jsonMin[i]-ktma[i].k_tma).toFixed(2);
+            }
+        }
+
+        changeMaxMin();
     </script>
 
     <!-- Bootstrap JS -->

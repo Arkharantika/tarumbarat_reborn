@@ -71,8 +71,8 @@
 
     updateMax();
     updateMin();
-    setInterval(updateMax, 4000);
-    setInterval(updateMin, 4000);
+    setInterval(updateMax, 30*1000);
+    setInterval(updateMin, 30*1000);
 
     var suply = [];
     var suplyMin = [];
@@ -80,6 +80,7 @@
     // Call this function to use the data stored in localStorage
     function useStoredData() {
         const storedData = localStorage.getItem('fetchedData');
+        suply = [];
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             for (const key in parsedData) {
@@ -99,6 +100,7 @@
 
     function minData() {
         const storedData = localStorage.getItem('minData');
+        suplyMin = [];
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             for (const key in parsedData) {
@@ -111,6 +113,7 @@
                 }
             }
             console.log('Data min from localStorage:', parsedData);
+            console.log("isinya sekarang : ", suplyMin);
         } else {
             console.log('No data found in localStorage');
         }
@@ -118,8 +121,9 @@
     // Example: Call the function to use the stored data
     useStoredData();
     minData();
-    setInterval(useStoredData, 4000);
-    setInterval(minData, 4000);
+    setInterval(useStoredData, 60*1000);
+    setInterval(minData, 60*1000);
+    // setInterval(console.log(suply), 10000);
     console.log("suply");
     console.log(suply);
     console.log("suplyMin");

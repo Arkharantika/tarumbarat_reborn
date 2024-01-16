@@ -54,6 +54,7 @@ class WelcomeController extends Controller
                             DB::raw('(mst_hardware.k3)'),
                             DB::raw('(mst_hardware.k_tma)'),
                             DB::raw('(mst_hardware.pos_name)'),
+                            DB::raw('(mst_hardware.urutan)'),
                             // DB::raw('(trs_raw_d_gpa.kd_hardware)')
                         )    
                         ->orderBy('trs_raw_d_gpa.tlocal', 'desc')->first();
